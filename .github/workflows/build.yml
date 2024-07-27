@@ -31,7 +31,7 @@ jobs:
       run: |
         echo "LAST_RELEASE=${{ steps.get-my-latest-release.outputs.release_tag }}"
         echo "CURRENT_RELEASE=${{ steps.get-latest-release.outputs.release_tag }}"
-        if [ "$LAST_RELEASE" != "$CURRENT_RELEASE" ]; then
+        if [ "${{ steps.get-my-latest-release.outputs.release_tag }}" != "${{ steps.get-latest-release.outputs.release_tag }}" ]; then
           echo "New release detected."
           echo "::set-output name=new_release::true"
         else
