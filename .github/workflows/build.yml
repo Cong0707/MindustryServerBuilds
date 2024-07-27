@@ -29,9 +29,9 @@ jobs:
     - name: Check for new release
       id: check-new-release
       run: |
-        echo "LAST_RELEASE="${{ steps.get-my-latest-release.outputs.release_tag }}"
+        echo "LAST_RELEASE=${{ steps.get-my-latest-release.outputs.release_tag }}"
         echo "CURRENT_RELEASE=${{ steps.get-latest-release.outputs.release_tag }}"
-        if [ "$LAST_RELEASE" != "${{ steps.get-latest-release.outputs.release_tag }}" ]; then
+        if [ "$LAST_RELEASE" != "$CURRENT_RELEASE" ]; then
           echo "New release detected."
           echo "::set-output name=new_release::true"
           echo "${{ steps.get-latest-release.outputs.release_tag }}" > .last_release
