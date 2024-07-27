@@ -18,16 +18,18 @@ jobs:
         latest_release=$(curl -s https://api.github.com/repos/Anuken/MindustryBuilds/releases/latest)
         release_tag=$(echo "$latest_release" | jq -r .tag_name)
         echo "::set-output name=release_tag::$release_tag"
+
+    - name: Get my latest release
+      id: get-my-latest-release
+      run: |
+        latest_release=$(curl -s https://api.github.com/repos/Cong0707/MindustryServerBuilds/releases/latest)
+        release_tag=$(echo "$latest_release" | jq -r .tag_name)
+        echo "::set-output name=release_tag::$release_tag"
         
     - name: Check for new release
       id: check-new-release
       run: |
-        if [ -f .last_release ]; then
-          LAST_RELEASE=$(cat .last_release)
-        else
-          LAST_RELEASE=""
-        fi
-        echo "LAST_RELEASE=$LAST_RELEASE"
+        echo "LAST_RELEASE="${{ steps.get-my-latest-release.outputs.release_tag }}"
         echo "CURRENT_RELEASE=${{ steps.get-latest-release.outputs.release_tag }}"
         if [ "$LAST_RELEASE" != "${{ steps.get-latest-release.outputs.release_tag }}" ]; then
           echo "New release detected."
