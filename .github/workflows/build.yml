@@ -34,7 +34,6 @@ jobs:
         if [ "$LAST_RELEASE" != "$CURRENT_RELEASE" ]; then
           echo "New release detected."
           echo "::set-output name=new_release::true"
-          echo "${{ steps.get-latest-release.outputs.release_tag }}" > .last_release
         else
           echo "No new release."
           echo "::set-output name=new_release::false"
@@ -61,4 +60,4 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: Mindustry/server/build/libs/Mindustry-BE-Server-${{ env.RELEASE_VERSION }}.jar
-        tag: ${{ github.ref }}
+        tag: "${{ steps.get-latest-release.outputs.release_tag }}"
