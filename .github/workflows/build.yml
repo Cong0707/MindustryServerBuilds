@@ -45,7 +45,7 @@ jobs:
         java-version: 17
     - name: Set env
       if: steps.check-new-release.outputs.new_release == 'true'
-      run: echo "RELEASE_VERSION=${steps.get-latest-release.outputs.release_tag}" >> $GITHUB_ENV
+      run: echo "RELEASE_VERSION=${{ steps.get-latest-release.outputs.release_tag }}" >> $GITHUB_ENV
     - name: Create artifacts
       if: steps.check-new-release.outputs.new_release == 'true'
       run: |
